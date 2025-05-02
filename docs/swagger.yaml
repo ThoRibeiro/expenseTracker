@@ -1,0 +1,304 @@
+basePath: /
+definitions:
+  models.Expense:
+    properties:
+      amount:
+        type: number
+      category:
+        type: string
+      date:
+        type: string
+      id:
+        type: integer
+      label:
+        type: string
+      notes:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - amount
+    - category
+    - date
+    - label
+    type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      is_admin:
+        type: boolean
+      name:
+        type: string
+    required:
+    - email
+    - name
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Une API pour gérer vos dépenses quotidiennes.
+  title: ExpenseTracker API
+  version: "1.0"
+paths:
+  /admin/reset:
+    post:
+      responses:
+        "200":
+          description: OK
+      security:
+      - BearerAuth: []
+      summary: Reset database
+      tags:
+      - admin
+  /expenses:
+    get:
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Page size
+        in: query
+        name: size
+        type: integer
+      - description: Category
+        in: query
+        name: category
+        type: string
+      - description: Min amount
+        in: query
+        name: min
+        type: number
+      - description: Max amount
+        in: query
+        name: max
+        type: number
+      - description: From date RFC3339
+        in: query
+        name: from
+        type: string
+      - description: To date RFC3339
+        in: query
+        name: to
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Expense'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: List expenses
+      tags:
+      - expenses
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Expense
+        in: body
+        name: expense
+        required: true
+        schema:
+          $ref: '#/definitions/models.Expense'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Expense'
+      security:
+      - BearerAuth: []
+      summary: Create expense
+      tags:
+      - expenses
+  /expenses/{id}:
+    delete:
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+      security:
+      - BearerAuth: []
+      summary: Delete expense
+      tags:
+      - expenses
+    get:
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Expense'
+      security:
+      - BearerAuth: []
+      summary: Get expense by id
+      tags:
+      - expenses
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Expense ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Expense
+        in: body
+        name: expense
+        required: true
+        schema:
+          $ref: '#/definitions/models.Expense'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Expense'
+      security:
+      - BearerAuth: []
+      summary: Update expense
+      tags:
+      - expenses
+  /expenses/bulk:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: ids
+        in: body
+        name: payload
+        required: true
+        schema:
+          additionalProperties:
+            items:
+              type: integer
+            type: array
+          type: object
+      responses:
+        "200":
+          description: deleted
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Bulk delete expenses
+      tags:
+      - expenses
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: ids and fields
+        in: body
+        name: payload
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      responses:
+        "200":
+          description: updated
+          schema:
+            type: string
+      security:
+      - BearerAuth: []
+      summary: Bulk update expenses
+      tags:
+      - expenses
+  /expenses/search:
+    get:
+      parameters:
+      - description: Query
+        in: query
+        name: q
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Expense'
+            type: array
+      security:
+      - BearerAuth: []
+      summary: Search expenses
+      tags:
+      - expenses
+  /login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Credentials
+        in: body
+        name: creds
+        required: true
+        schema:
+          additionalProperties:
+            type: string
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Login
+      tags:
+      - auth
+  /users:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User credentials
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Register a new user
+      tags:
+      - auth
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

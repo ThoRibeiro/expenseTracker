@@ -1,0 +1,57 @@
+
+# ExpenseTracker API
+
+Une API REST en Go (Gin) + SQLite pour gérer vos dépenses.
+
+## Lancer en local
+
+```bash
+go run .
+```
+
+Variables d'environnement utiles :
+- `JWT_SECRET` (défaut `secret`)
+- `ADMIN_EMAIL` (défaut `admin@example.com`)
+- `ADMIN_PASS` (défaut `admin`)
+
+Swagger : http://localhost:8080/docs/index.html
+
+## Déploiement Render
+
+Plan : **Web Service** Go 1.22  
+Build : `go build -o server .`  
+Start : `./server`
+
+## Auto‑évaluation
+
+| Exigence | Points | Réalisé |
+|---|---|---|
+| CRUD basique | 3 | ✅ |
+| Recherche plein‑texte | 1 | ✅ |
+| Bulk update/delete | 1 | ✅ |
+| Reset DB | 0.5 | ✅ |
+| Auth & JWT | 4 | ✅ |
+| Validation & erreurs | 3 | ✅ |
+| Swagger | 2 | ✅ (`/docs`) |
+| Logging fichiers | 1 | ✅ (`logs/*.log`) |
+| Fichier requests.http | 2 | ✅ |
+| Déploiement gratuit | 3 | ✅ Render plan free |
+| **Total** | **20** | **20/20** |
+
+## Structure
+
+```
+.
+├── config/
+├── controllers/
+├── database/
+├── docs/
+├── logs/
+├── middleware/
+├── models/
+├── routes/
+├── seed/
+├── utils/
+├── requests.http
+└── README.md
+```
