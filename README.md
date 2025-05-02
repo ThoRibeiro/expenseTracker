@@ -24,19 +24,19 @@ Start : `./server`
 
 ## Auto‑évaluation
 
-| Exigence | Points | Réalisé |
-|---|---|---|
-| CRUD basique | 3 | ✅ |
-| Recherche plein‑texte | 1 | ✅ |
-| Bulk update/delete | 1 | ✅ |
-| Reset DB | 0.5 | ✅ |
-| Auth & JWT | 4 | ✅ |
-| Validation & erreurs | 3 | ✅ |
-| Swagger | 2 | ✅ (`/docs`) |
-| Logging fichiers | 1 | ✅ (`logs/*.log`) |
-| Fichier requests.http | 2 | ✅ |
-| Déploiement gratuit | 3 | ✅ Render plan free |
-| **Total** | **20** | **20/20** |
+| Exigence | Points   | Réalisé |
+|---|----------|-|
+| CRUD basique | 2        | |
+| Recherche plein‑texte | 0,5      | |
+| Bulk update/delete | 0,5      | |
+| Reset DB | 0.5      | ✅ |
+| Auth & JWT | 3        | ✅ |
+| Validation & erreurs | 2        | ✅ |
+| Swagger | 2        | ✅ (`/docs`) |
+| Logging fichiers | 1        | ✅ (`logs/*.log`) |
+| Fichier requests.http | 2        | ✅ |
+| Déploiement gratuit | 3        | ✅ Render plan free |
+| **Total** | **16,5** | **16,5/20** |
 
 ## Structure
 
