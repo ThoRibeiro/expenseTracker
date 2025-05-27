@@ -1,33 +1,40 @@
-
 package routes
 
 import (
-    "expensetracker/controllers"
-    "expensetracker/middleware"
-    "github.com/gin-gonic/gin"
+	"expensetracker/controllers"
+	"expensetracker/middleware"
+	"github.com/gin-gonic/gin"
 )
 
 func SetupRoutes(r *gin.Engine) {
-    r.POST("/users", controllers.Register)
-    r.POST("/login", controllers.Login)
+	// Public
+	r.POST("/users/register", controllers.Register)
+	r.POST("/users/login", controllers.Login)
 
-    auth := r.Group("/")
-    auth.Use(middleware.AuthRequired())
+	// Protected routes
+	auth := r.Group("/users")
+	auth.Use(middleware.AuthRequired())
 
-    // user self update
-    auth.PUT("/me", controllers.Register) // simple reuse, could be separate
+	// User updates own profile
+	auth.PUT("/me", controllers.UpdateMe)
 
-    // expenses
-    auth.GET("/expenses", controllers.ListExpenses)
-    auth.GET("/expenses/:id", controllers.GetExpense)
-    auth.GET("/expenses/search", controllers.SearchExpenses)
-    auth.POST("/expenses", controllers.CreateExpense)
-    auth.PUT("/expenses/:id", controllers.UpdateExpense)
-    auth.DELETE("/expenses/:id", controllers.DeleteExpense)
-    auth.PUT("/expenses/bulk", controllers.BulkUpdate)
-    auth.DELETE("/expenses/bulk", controllers.BulkDelete)
+	// Expenses endpoints under authenticated context
+	auth.GET("/expenses", controllers.ListExpenses)
+	auth.GET("/expenses/:id", controllers.GetExpense)
+	auth.GET("/expenses/search", controllers.SearchExpenses)
+	auth.POST("/expenses", controllers.CreateExpense)
+	auth.PUT("/expenses/:id", controllers.UpdateExpense)
+	auth.DELETE("/expenses/:id", controllers.DeleteExpense)
+	auth.PUT("/expenses/bulk", controllers.BulkUpdate)
+	auth.DELETE("/expenses/bulk", controllers.BulkDelete)
 
-    admin := auth.Group("/admin")
-    admin.Use(middleware.AdminOnly())
-    admin.POST("/reset", controllers.ResetDB)
+	// Admin-only group
+	admin := auth.Group("/admin")
+	admin.Use(middleware.AdminOnly())
+
+	// Reset database
+	admin.POST("/reset", controllers.ResetDB)
+
+	// Admin can update any non-admin user
+	admin.PUT("/users/:id", controllers.AdminUpdateUser)
 }

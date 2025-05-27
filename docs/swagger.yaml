@@ -53,6 +53,50 @@ paths:
       summary: Reset database
       tags:
       - admin
+  /admin/users/{id}:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Fields to update
+        in: body
+        name: data
+        required: true
+        schema:
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "403":
+          description: Forbidden
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Admin update user (non-admin)
+      tags:
+      - admin
   /expenses:
     get:
       parameters:
@@ -210,13 +254,26 @@ paths:
         name: payload
         required: true
         schema:
-          additionalProperties: true
           type: object
       responses:
         "200":
-          description: updated
+          description: updated count
           schema:
-            type: string
+            additionalProperties:
+              type: integer
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
       security:
       - BearerAuth: []
       summary: Bulk update expenses
@@ -296,6 +353,33 @@ paths:
       summary: Register a new user
       tags:
       - auth
+  /users/me:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: Profile fields
+        in: body
+        name: profile
+        required: true
+        schema:
+          type: object
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update own profile
+      tags:
+      - users
 securityDefinitions:
   BearerAuth:
     in: header
