@@ -1,0 +1,111 @@
+@base_url = http://localhost:8080
+@token =
+@admin_token =
+
+### 1. Register a new user
+POST {{base_url}}/users/register
+Content-Type: application/json
+
+{
+  "name": "Alice",
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+### 2. Login as user
+POST {{base_url}}/users/login
+Content-Type: application/json
+
+{
+  "email": "alice@example.com",
+  "password": "password123"
+}
+
+### 3. Update own profile
+PUT {{base_url}}/users/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Alice M.",
+  "email": "alice.m@example.com",
+  "password": "newpass456"
+}
+
+### 4. List all expenses
+GET {{base_url}}/users/expenses
+Authorization: Bearer {{token}}
+
+### 5. Create an expense
+POST {{base_url}}/users/expenses
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "label": "Lunch",
+  "amount": 15.00,
+  "category": "food",
+  "date": "2025-05-02T12:30:00Z",
+  "notes": "Sandwich"
+}
+
+### 6. Get expense by ID
+GET {{base_url}}/users/expenses/1
+Authorization: Bearer {{token}}
+
+### 7. Update an expense
+PUT {{base_url}}/users/expenses/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "label": "Business Lunch",
+  "amount": 18.50,
+  "category": "food",
+  "date": "2025-05-02T12:30:00Z",
+  "notes": "Client meeting"
+}
+
+### 8. Delete an expense
+DELETE {{base_url}}/users/expenses/1
+Authorization: Bearer {{token}}
+
+### 9. Search expenses
+GET {{base_url}}/users/expenses/search?q=Lunch
+Authorization: Bearer {{token}}
+
+### 10. Bulk update expenses
+PUT {{base_url}}/users/expenses/bulk
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "ids": [2, 3],
+  "fields": {
+    "category": "transport"
+  }
+}
+
+### 11. Bulk delete expenses
+DELETE {{base_url}}/users/expenses/bulk
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "ids": [2, 3]
+}
+
+### 12. Reset database (admin only)
+POST {{base_url}}/users/admin/reset
+Authorization: Bearer {{admin_token}}
+
+### 13. Admin update user (non-admin)
+PUT {{base_url}}/users/admin/users/2
+Authorization: Bearer {{admin_token}}
+Content-Type: application/json
+
+{
+  "name": "Bob",
+  "email": "bob@example.com",
+  "is_admin": false
+}
