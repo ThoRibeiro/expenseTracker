@@ -1,0 +1,30 @@
+# render.yaml
+
+services:
+  - type: web
+    runtime: go
+    name: expenseTracker
+    branch: main
+    plan: free
+    region: oregon
+
+    buildCommand: |
+      go mod tidy
+      go install github.com/swaggo/swag/cmd/swag@latest
+      swag init -g main.go -o docs
+      go build -v -o server .
+
+    startCommand: ./server
+
+    envVars:
+      - key: JWT_SECRET
+        sync: false
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASS
+        sync: false
+
+    disk:
+      name: sqlite-data
+      mountPath: /app
+      sizeGB: 1
