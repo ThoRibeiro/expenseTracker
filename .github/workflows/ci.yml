@@ -51,7 +51,7 @@ jobs:
           go build -v -o server .
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2
         with:
           name: server
           path: server
