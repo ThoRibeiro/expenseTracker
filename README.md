@@ -72,19 +72,19 @@ Le fichier `render.yaml` configure le déploiement sur Render (plan free) :
 
 ## 📊 Auto‑évaluation
 
-| Exigence                                          |  Points  |   Réalisé   |
-| ------------------------------------------------- | :------: |:-----------:|
-| CRUD basique (List, Read, Create, Update, Delete) |     2    |      ✅      |
-| Recherche plein-texte                             |    0.5   |      ✅      |
-| Bulk update/delete                                |    0.5   |      ✅      |
-| Réinitialiser la BDD                              |    0.5   |      ✅      |
-| Authentification & JWT                            |     3    |      ✅      |
-| Validation & gestion d’erreurs                    |     3    |      ✅      |
-| Documentation Swagger UI                          |     2    |      ✅      |
-| Logging (app.log & error.log)                     |     1    |      ❌      |
-| Collection `requests.http`                        |     2    |      ✅      |
-| Déploiement gratuit (Render)                      |     3    |      ✅      |
-| **Total**                                         | **16.5** | **16.5/20** |
+| Exigence                                          | Points |  Réalisé  |
+| ------------------------------------------------- |:------:|:---------:|
+| CRUD basique (List, Read, Create, Update, Delete) |   2    |     ✅     |
+| Recherche plein-texte                             |  0.5   |     ✅     |
+| Bulk update/delete                                |  0.5   |     ✅     |
+| Réinitialiser la BDD                              |  0.5   |     ✅     |
+| Authentification & JWT                            |   3    |     ✅     |
+| Validation & gestion d’erreurs                    |   3    |     ✅     |
+| Documentation Swagger UI                          |   2    |     ✅     |
+| Logging (app.log & error.log)                     |   1    |     ✅     |
+| Collection `requests.http`                        |   2    |     ✅     |
+| Déploiement gratuit (Render)                      |   3    |     ✅     |
+| **Total**                                         | **20** | **20/20** |
 
 ---
 
