@@ -45,7 +45,7 @@ func TestRegisterAndLogin(t *testing.T) {
 	w := httptest.NewRecorder()
 	regBody := map[string]string{"name": "Bob", "email": "bob@example.com", "password": "password1"}
 	jsonReg, _ := json.Marshal(regBody)
-	req, _ := http.NewRequest("POST", "/users", bytes.NewBuffer(jsonReg))
+	req, _ := http.NewRequest("POST", "/users/register", bytes.NewBuffer(jsonReg))
 	req.Header.Set("Content-Type", "application/json")
 	router.ServeHTTP(w, req)
 	if w.Code != http.StatusCreated {
@@ -63,7 +63,7 @@ func TestRegisterAndLogin(t *testing.T) {
 	w2 := httptest.NewRecorder()
 	loginBody := map[string]string{"email": "bob@example.com", "password": "password1"}
 	jsonLogin, _ := json.Marshal(loginBody)
-	req2, _ := http.NewRequest("POST", "/login", bytes.NewBuffer(jsonLogin))
+	req2, _ := http.NewRequest("POST", "/users/login", bytes.NewBuffer(jsonLogin))
 	req2.Header.Set("Content-Type", "application/json")
 	router.ServeHTTP(w2, req2)
 	if w2.Code != http.StatusOK {
