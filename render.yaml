@@ -3,7 +3,7 @@ services:
   - type: web
     runtime: go
     name: expenseTracker
-    region: oregon
+    region: frankfurt
     plan: free
     branch: main
 
