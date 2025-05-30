@@ -8,8 +8,8 @@ on:
 
 jobs:
   build:
-    name: Build, Lint, Docs & Test
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -30,8 +30,7 @@ jobs:
             ${{ runner.os }}-go-
 
       - name: Install dependencies
-        run: |
-          go mod tidy
+        run: go mod tidy
 
       - name: Install swag CLI
         run: |
@@ -39,19 +38,10 @@ jobs:
           echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Generate Swagger docs
-        run: |
-          swag init -g main.go -o docs
+        run: swag init -g main.go -o docs
 
       - name: Run tests
-        run: |
-          go test ./... -v
+        run: go test ./... -v
 
       - name: Build server binary
-        run: |
-          go build -v -o server .
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: server
-          path: server
+        run: go build -v -o server .
